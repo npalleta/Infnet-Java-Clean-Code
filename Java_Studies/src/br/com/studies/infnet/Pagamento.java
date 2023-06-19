@@ -1,17 +1,17 @@
 package br.com.studies.infnet;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.OptionalDouble;
 
 public class Pagamento {
 
     private List<Produto> produtos;
-    private LocalDate dataCompra;
+    private LocalDateTime dataCompra;
     private Cliente cliente;
 
-    public Pagamento(List<Produto> produtos, LocalDate dataCompra, Cliente cliente) {
+    public Pagamento(List<Produto> produtos, LocalDateTime dataCompra, Cliente cliente) {
         this.produtos = produtos;
         this.dataCompra = dataCompra;
         this.cliente = cliente;
@@ -25,11 +25,11 @@ public class Pagamento {
         this.produtos = produtos;
     }
 
-    public LocalDate getDataCompra() {
+    public LocalDateTime getDataCompra() {
         return dataCompra;
     }
 
-    public void setDataCompra(LocalDate dataCompra) {
+    public void setDataCompra(LocalDateTime dataCompra) {
         this.dataCompra = dataCompra;
     }
 

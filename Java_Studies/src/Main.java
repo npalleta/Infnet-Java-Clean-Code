@@ -1,56 +1,61 @@
 import br.com.studies.Java01Exercises;
-import br.com.studies.infnet.Cliente;
-import br.com.studies.infnet.Pagamento;
-import br.com.studies.infnet.Produto;
+import br.com.studies.infnet.*;
 
 import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new Java01Exercises("abc").getTextA().getTextB().text);
+        out.println(new Java01Exercises("abc").getTextA().getTextB().text);
 
-        System.out.println("--- Exercício 01 ---");
+        out.println("--- Exercício 01 ---");
+        Produto cadeiraGamer = new Produto("Cadeira Gamer", Paths.get("cadeiras/gamer"), new BigDecimal("1000.00"));
+        Produto notebookAvell = new Produto("Notebook Avell", Paths.get("notebooks/avell"), new BigDecimal("4000.00"));
+        Produto livroHarryPotter = new Produto("Livro Harry Potter", Paths.get("livros/harry_potter"), new BigDecimal("50.00"));
+        Produto pacoteImgNFTS = new Produto("Pacote de Imagens - NFT", Paths.get("nfts/pacote_imagens"), new BigDecimal("6000.00"));
 
-        Produto produtoA = new Produto("Cadeira Gamer", Paths.get("cadeiras/gamer"), new BigDecimal("1000.00"));
-        Produto produtoB = new Produto("Notebook Avell", Paths.get("notebooks/avell"), new BigDecimal("4000.00"));
-        Produto produtoC = new Produto("Livro Harry Potter", Paths.get("livros/harry_potter"), new BigDecimal("50.00"));
-        Produto produtoD = new Produto("Pacote de Imagens - NFT", Paths.get("nfts/pacote_imagens"), new BigDecimal("6000.00"));
-
-        Cliente maria = new Cliente();
-        Cliente jonas = new Cliente();
         Cliente andre = new Cliente();
         Cliente camila = new Cliente();
+        Cliente jonas = new Cliente();
+        Cliente maria = new Cliente();
 
-        maria.setNome("Maria");
-        jonas.setNome("Jonas");
         andre.setNome("André");
         camila.setNome("Camila");
+        jonas.setNome("Jonas");
+        maria.setNome("Maria");
 
-        LocalDate hoje = LocalDate.now();
-        LocalDate ontem = LocalDate.now().minusDays(1);
-        LocalDate mesPassado = LocalDate.now().minusMonths(1);
+        LocalDateTime hoje = LocalDateTime.now();
+        LocalDateTime ontem = hoje.minusDays(1);
+        LocalDateTime mesPassado = hoje.minusMonths(1);
+        LocalDateTime anoPassado = hoje.minusYears(1);
+        LocalDateTime anoRetrasado = hoje.minusYears(2);
+        LocalDateTime anoQueVem = hoje.plusYears(1);
 
-        Pagamento pagamentoClienteA = new Pagamento(List.of(produtoA, produtoB), hoje, maria);
-        Pagamento pagamentoClienteB = new Pagamento(List.of(produtoA, produtoB, produtoC, produtoD, produtoD), ontem, jonas);
-        Pagamento pagamentoClienteC = new Pagamento(List.of(produtoA, produtoB, produtoC, produtoD), mesPassado, andre);
+        Pagamento pagamentoAndre = new Pagamento(List.of(cadeiraGamer, notebookAvell, livroHarryPotter, pacoteImgNFTS), mesPassado, andre);
+        Pagamento pagamentoCamila = new Pagamento(List.of(notebookAvell, livroHarryPotter, pacoteImgNFTS), mesPassado, camila);
+        Pagamento pagamentoJonas = new Pagamento(List.of(cadeiraGamer, notebookAvell, livroHarryPotter, pacoteImgNFTS, pacoteImgNFTS), ontem, jonas);
+        Pagamento pagamentoMaria = new Pagamento(List.of(cadeiraGamer, notebookAvell), hoje, maria);
 
-        List<Pagamento> pagamentos = Arrays.asList(pagamentoClienteA, pagamentoClienteB, pagamentoClienteC);
-        pagamentos.forEach(p -> System.out.println(p.toString()));
+        List<Pagamento> pagamentos = Arrays.asList(pagamentoAndre, pagamentoCamila, pagamentoJonas, pagamentoMaria);
+        pagamentos.forEach(p -> out.println(p.toString()));
 
-        System.out.println("--- Exercício 02 ---");
-
+        out.println("--- Exercício 02 ---");
         pagamentos.sort(Comparator.comparing(p -> p.getDataCompra()));
-        Function<Pagamento, LocalDate> resgataDatasCompra = p -> p.getDataCompra();
+        Function<Pagamento, LocalDateTime> resgataDatasCompra = p -> p.getDataCompra();
         Comparator<Pagamento> comparator = Comparator.comparing(resgataDatasCompra);
         pagamentos.sort(comparator);
-        System.out.println("--- Ordenação 01 ---");
-        pagamentos.forEach(System.out::println);
+        out.println("--- Ordenação 01 ---");
+        pagamentos.forEach(out::println);
 
         List<Pagamento> pagamentosOrdenadosPorDataCompra = pagamentos
             .stream()
@@ -58,37 +63,35 @@ public class Main {
                 Comparator.comparing(Pagamento::getDataCompra)
             )
             .toList();
-        System.out.println("--- Ordenação 02 ---");
-        pagamentosOrdenadosPorDataCompra.forEach(System.out::println);
+        out.println("--- Ordenação 02 ---");
+        pagamentosOrdenadosPorDataCompra.forEach(out::println);
 
-        System.out.println("--- Exercício 03 ---");
+        out.println("--- Exercício 03 ---");
+        out.printf("Usando BigDecimal: %s%n", pagamentoAndre.somaPrecosProdutosPagtoUsandoBigDecimal());
+        out.printf("Usando Optional: %s%n", pagamentoAndre.somaPrecosProdutosPagtoUsandoOptional());
 
-        System.out.printf("Usando BigDecimal: %s%n", pagamentoClienteC.somaPrecosProdutosPagtoUsandoBigDecimal());
-        System.out.printf("Usando Optional: %s%n", pagamentoClienteC.somaPrecosProdutosPagtoUsandoOptional());
-
-        System.out.println("--- Exercício 04 ---");
-
+        out.println("--- Exercício 04 ---");
         BigDecimal todosPagtosSomados = pagamentos.stream().map(Pagamento::somaPrecosProdutosPagtoUsandoBigDecimal).reduce(BigDecimal.ZERO, BigDecimal::add);
-        System.out.printf("Somando todos os pagtos: %s%n", todosPagtosSomados);
+        out.printf("Somando todos os pagtos: %s%n", todosPagtosSomados);
 
-        System.out.println("--- Exercício 05 ---");
-        System.out.printf("Contando produtos vendidos para o Cliente A : %s%n", pagamentoClienteA.getProdutos().size());
-        System.out.printf("Contando produtos vendidos para o Cliente B : %s%n", pagamentoClienteB.getProdutos().size());
-        System.out.printf("Contando produtos vendidos para o Cliente C : %s%n", pagamentoClienteC.getProdutos().size());
+        out.println("--- Exercício 05 ---");
+        out.printf("Contando produtos vendidos para o Cliente A : %s%n", pagamentoMaria.getProdutos().size());
+        out.printf("Contando produtos vendidos para o Cliente B : %s%n", pagamentoJonas.getProdutos().size());
+        out.printf("Contando produtos vendidos para o Cliente C : %s%n", pagamentoAndre.getProdutos().size());
 
         OptionalInt contadorProdutosTotaisVendidos = pagamentos.stream().mapToInt(pagamento -> pagamento.getProdutos().size()).reduce(Integer::sum);
-        System.out.printf("Contando total de produtos vendidos: %s%n", contadorProdutosTotaisVendidos.getAsInt());
+        out.printf("Contando total de produtos vendidos: %s%n", contadorProdutosTotaisVendidos.getAsInt());
 
-        System.out.println("--- Exercício 06 ---");
+        out.println("--- Exercício 06 ---");
         Cliente c1 = new Cliente();
         c1.setNome("Douglas Lima");
         Cliente c2 = new Cliente();
         c2.setNome("Lucas Santos");
-        Produto cadeiraGamer = new Produto("Cadeira Gamer", Paths.get("cadeiras/gamer"), new BigDecimal("1000.00"));
+        Produto prodCadeiraGamer = new Produto("Cadeira Gamer", Paths.get("cadeiras/gamer"), new BigDecimal("1000.00"));
         Produto pacoteDeImagens = new Produto("Pacote de Imagens - NFT", Paths.get("nfts/pacote_imagens"), new BigDecimal("6000.00"));
         HashMap<String, List<Produto>> clienteProdutos = new HashMap<>();
-        clienteProdutos.put(c1.getNome(), List.of(cadeiraGamer, pacoteDeImagens));
-        clienteProdutos.put(c2.getNome(), List.of(cadeiraGamer));
+        clienteProdutos.put(c1.getNome(), List.of(prodCadeiraGamer, pacoteDeImagens));
+        clienteProdutos.put(c2.getNome(), List.of(prodCadeiraGamer));
         clienteProdutos
             .entrySet()
             .stream()
@@ -99,11 +102,11 @@ public class Main {
                     e.getValue()
                 )
             )
-            .forEach(System.out::println);
+            .forEach(out::println);
         //
 
-        System.out.println("--- Exercício 07 ---");
-        System.out.println("Sem ordenação - apenas impressão do map com as chaves e valores:");
+        out.println("--- Exercício 07 ---");
+        out.println("Sem ordenação - apenas impressão do map com as chaves e valores:");
         pagamentos.forEach(pagamento ->
             {
                 HashMap<String, BigDecimal> mapClienteProdutos = new HashMap<>();
@@ -119,7 +122,7 @@ public class Main {
                                 e.getValue()
                         )
                     )
-                    .forEach(System.out::println);
+                    .forEach(out::println);
                 //
             }
         );
@@ -144,14 +147,94 @@ public class Main {
                 )
             );
         //
-        System.out.printf("Ordenando pelo maior valor gasto em compras: %s%n", mapClienteProdutosOrdenado);
+        out.printf("Ordenando pelo maior valor gasto em compras: %s%n", mapClienteProdutosOrdenado);
 
-        System.out.println("Apresentando o cliente que gastou o maior valor em compras:");
+        out.println("Apresentando o cliente que gastou o maior valor em compras:");
         Map.Entry<String, BigDecimal> clienteQueGastouMais = mapClienteProdutosOrdenado.entrySet().stream().findFirst().get();
-        System.out.printf(
+        out.printf(
             "Nome do Cliente: %s | Valor em Compra(s): %s%n",
             clienteQueGastouMais.getKey(),
             clienteQueGastouMais.getValue()
         );
+
+        Map<Cliente, List<List<Produto>>> clienteParaProdutos = pagamentos.stream().collect(Collectors.groupingBy(
+           Pagamento::getCliente, Collectors.mapping(Pagamento::getProdutos, Collectors.toList())));
+        out.println(clienteParaProdutos);
+
+        Map<Cliente, List<Produto>> flatMapClienteParaProdutos = clienteParaProdutos.entrySet().stream().collect(Collectors.toMap(
+           Map.Entry::getKey, e -> e.getValue().stream().flatMap(List::stream).collect(Collectors.toList())));
+        out.println(flatMapClienteParaProdutos);
+
+        Function<Pagamento, BigDecimal> reducingFunction = p -> p.getProdutos()
+           .stream()
+           .map(Produto::getPreco)
+           .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Map<Cliente, BigDecimal> topClientes = pagamentos
+           .stream()
+           .collect(
+               Collectors.groupingBy(
+                   Pagamento::getCliente,
+                   Collectors.reducing(
+                       BigDecimal.ZERO,
+                       reducingFunction,
+                       BigDecimal::add
+                   )
+               )
+           );
+        //
+
+        topClientes.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(out::println);
+
+        List<Map.Entry<Cliente, BigDecimal>> ordenaClientePorGasto = topClientes.entrySet().stream().sorted(
+           Map.Entry.comparingByValue(
+               Comparator.reverseOrder()
+           )
+        ).toList();
+        out.printf("Cliente com o maior gasto: %s%n", ordenaClientePorGasto.stream().findFirst().get());
+
+        out.println("--- Exercício 08 ---");
+        BigDecimal somaPagtosPorPeriodoEspecifico = pagamentos
+           .stream()
+           .filter(pagto -> pagto.getDataCompra().equals(mesPassado))
+           .map(Pagamento::somaPrecosProdutosPagtoUsandoBigDecimal)
+           .reduce(BigDecimal.ZERO, BigDecimal::add);
+        out.printf("Clientes com pagamento do mês passado: %s%n", somaPagtosPorPeriodoEspecifico);
+
+        out.println("--- Exercício 09 ---");
+        Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), andre);
+        Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), camila);
+        Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), jonas);
+        Assinatura assinaturaMaria = new Assinatura(new BigDecimal("99.98"), new Periodo(hoje, anoQueVem), maria);
+
+        List<Assinatura> assinaturas = List.of(assinaturaAndre, assinaturaCamila, assinaturaJonas, assinaturaMaria);
+        assinaturas.forEach(out::println);
+
+        Periodo p1 = new Periodo(ontem, hoje);
+        Periodo p2 = new Periodo(hoje, anoQueVem);
+        out.println(p1.getBegin() + " " + p1.getEnd());
+        out.println(p2.getBegin() + " " + p2.getEnd());
+
+        out.println(assinaturaCamila.getPeriodo().getBegin());
+        out.println(assinaturaCamila.getPeriodo().getEnd().orElse(hoje));
+
+        out.println("--- Exercício 10 ---");
+        long periodoAssinaturaAndre = ChronoUnit.MONTHS.between(assinaturaAndre.getPeriodo().getBegin(), assinaturaAndre.getPeriodo().getEnd().orElse(hoje));
+        out.printf("O período de assinatura da André é de %s meses %n", periodoAssinaturaAndre);
+
+        long periodoAssinaturaMaria = ChronoUnit.MONTHS.between(assinaturaMaria.getPeriodo().getBegin(), assinaturaMaria.getPeriodo().getEnd().orElseGet(() -> hoje));
+        out.printf("O período de assinatura da Camila é de %s meses %n", periodoAssinaturaMaria);
+
+        out.println("--- Exercício 11 ---");
+        long[] array = assinaturas
+            .stream()
+            .map(Assinatura :: getPeriodo)
+            .mapToLong(
+                periodo -> ChronoUnit.MONTHS.between(
+                    periodo.getBegin(),
+                    periodo.getEnd().orElse(hoje)
+                )
+            ).toArray();
+        //
     }
 }

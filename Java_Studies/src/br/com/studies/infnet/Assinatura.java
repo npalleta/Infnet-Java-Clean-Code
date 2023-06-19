@@ -1,24 +1,18 @@
 package br.com.studies.infnet;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Assinatura {
 
     private BigDecimal mensalidade;
-    private BigDecimal begin;
-    private BigDecimal end;
+    private Periodo periodo;
     private Cliente cliente;
 
-    public Assinatura(BigDecimal mensalidade, BigDecimal begin, BigDecimal end, Cliente cliente) {
+    public Assinatura(BigDecimal mensalidade, Periodo periodo, Cliente cliente) {
         this.mensalidade = mensalidade;
-        this.begin = begin;
-        this.end = end;
-        this.cliente = cliente;
-    }
-
-    public Assinatura(BigDecimal mensalidade, BigDecimal begin, Cliente cliente) {
-        this.mensalidade = mensalidade;
-        this.begin = begin;
+        this.periodo = periodo;
         this.cliente = cliente;
     }
 
@@ -30,20 +24,12 @@ public class Assinatura {
         this.mensalidade = mensalidade;
     }
 
-    public BigDecimal getBegin() {
-        return begin;
+    public Periodo getPeriodo() {
+        return periodo;
     }
 
-    public void setBegin(BigDecimal begin) {
-        this.begin = begin;
-    }
-
-    public BigDecimal getEnd() {
-        return end;
-    }
-
-    public void setEnd(BigDecimal end) {
-        this.end = end;
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
 
     public Cliente getCliente() {
@@ -58,8 +44,8 @@ public class Assinatura {
     public String toString() {
         return "Assinatura{" +
                 "mensalidade=" + mensalidade +
-                ", begin=" + begin +
-                ", end=" + end +
+                ", periodoBegin=" + periodo +
+                ", periodoEnd=" + periodo +
                 ", cliente=" + cliente +
                 '}';
     }
