@@ -226,15 +226,39 @@ public class Main {
         out.printf("O período de assinatura da Camila é de %s meses %n", periodoAssinaturaMaria);
 
         out.println("--- Exercício 11 ---");
-        long[] array = assinaturas
+        assinaturas
             .stream()
-            .map(Assinatura :: getPeriodo)
+            .map(Assinatura::getPeriodo)
             .mapToLong(
                 periodo -> ChronoUnit.MONTHS.between(
                     periodo.getBegin(),
                     periodo.getEnd().orElse(hoje)
                 )
-            ).toArray();
+            )
+            .forEach(contagemPeriodo -> {
+                out.printf(
+                    "Contando o tempo de assinatura: %s%n",
+                    contagemPeriodo
+                );
+            });
         //
+
+        assinaturas.stream().collect(Collectors.toMap(
+                a -> a.getCliente().getNome(),
+                a -> ChronoUnit.MONTHS.between(
+                    a.getPeriodo().getBegin(),
+                    a.getPeriodo().getEnd().orElse(hoje)
+                )
+            )
+        )
+        .entrySet()
+        .stream()
+        .map(
+            e -> String.format(
+                "Nome do Cliente: %s | Tempo da Assinatura em Mês/Meses: %s",
+                e.getKey(),
+                e.getValue()
+            )
+        ).forEach(out::println);
     }
 }
