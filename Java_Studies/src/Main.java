@@ -117,9 +117,9 @@ public class Main {
                     .stream()
                     .map(
                         e -> String.format(
-                                "Nome do Cliente: %s | Item(ns): %s",
-                                e.getKey(),
-                                e.getValue()
+                            "Nome do Cliente: %s | Item(ns): %s",
+                            e.getKey(),
+                            e.getValue()
                         )
                     )
                     .forEach(out::println);
