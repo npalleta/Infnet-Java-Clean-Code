@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         out.println(new Java01Exercises("abc").getTextA().getTextB().text);
 
-        out.println("--- Exercício 01 ---");
+        out.println("\n--- Exercício 01 ---");
         Produto cadeiraGamer = new Produto("Cadeira Gamer", Paths.get("cadeiras/gamer"), new BigDecimal("1000.00"));
         Produto notebookAvell = new Produto("Notebook Avell", Paths.get("notebooks/avell"), new BigDecimal("4000.00"));
         Produto livroHarryPotter = new Produto("Livro Harry Potter", Paths.get("livros/harry_potter"), new BigDecimal("50.00"));
@@ -47,7 +47,7 @@ public class Main {
         List<Pagamento> pagamentos = Arrays.asList(pagamentoAndre, pagamentoCamila, pagamentoJonas, pagamentoMaria);
         pagamentos.forEach(p -> out.println(p.toString()));
 
-        out.println("--- Exercício 02 ---");
+        out.println("\n--- Exercício 02 ---");
         pagamentos.sort(Comparator.comparing(p -> p.getDataCompra()));
         Function<Pagamento, LocalDateTime> resgataDatasCompra = p -> p.getDataCompra();
         Comparator<Pagamento> comparator = Comparator.comparing(resgataDatasCompra);
@@ -64,15 +64,15 @@ public class Main {
         out.println("--- Ordenação 02 ---");
         pagamentosOrdenadosPorDataCompra.forEach(out::println);
 
-        out.println("--- Exercício 03 ---");
+        out.println("\n--- Exercício 03 ---");
         out.printf("Usando BigDecimal: %s%n", pagamentoAndre.somaPrecosProdutosPagtoUsandoBigDecimal());
         out.printf("Usando Optional: %s%n", pagamentoAndre.somaPrecosProdutosPagtoUsandoOptional());
 
-        out.println("--- Exercício 04 ---");
+        out.println("\n--- Exercício 04 ---");
         BigDecimal todosPagtosSomados = pagamentos.stream().map(Pagamento::somaPrecosProdutosPagtoUsandoBigDecimal).reduce(BigDecimal.ZERO, BigDecimal::add);
         out.printf("Somando todos os pagtos: %s%n", todosPagtosSomados);
 
-        out.println("--- Exercício 05 ---");
+        out.println("\n--- Exercício 05 ---");
         out.printf("Contando produtos vendidos para o Cliente A : %s%n", pagamentoMaria.getProdutos().size());
         out.printf("Contando produtos vendidos para o Cliente B : %s%n", pagamentoJonas.getProdutos().size());
         out.printf("Contando produtos vendidos para o Cliente C : %s%n", pagamentoAndre.getProdutos().size());
@@ -80,7 +80,7 @@ public class Main {
         OptionalInt contadorProdutosTotaisVendidos = pagamentos.stream().mapToInt(pagamento -> pagamento.getProdutos().size()).reduce(Integer::sum);
         out.printf("Contando total de produtos vendidos: %s%n", contadorProdutosTotaisVendidos.getAsInt());
 
-        out.println("--- Exercício 06 ---");
+        out.println("\n--- Exercício 06 ---");
         Cliente c1 = new Cliente();
         c1.setNome("Douglas Lima");
         Cliente c2 = new Cliente();
@@ -103,7 +103,7 @@ public class Main {
             .forEach(out::println);
         //
 
-        out.println("--- Exercício 07 ---");
+        out.println("\n--- Exercício 07 ---");
         out.println("Sem ordenação - apenas impressão do map com as chaves e valores:");
         pagamentos.forEach(pagamento ->
             {
@@ -191,7 +191,7 @@ public class Main {
         ).toList();
         out.printf("Cliente com o maior gasto: %s%n", ordenaClientePorGasto.stream().findFirst().get());
 
-        out.println("--- Exercício 08 ---");
+        out.println("\n--- Exercício 08 ---");
         BigDecimal somaPagtosPorPeriodoEspecifico = pagamentos
            .stream()
            .filter(pagto -> pagto.getDataCompra().equals(mesPassado))
@@ -199,7 +199,7 @@ public class Main {
            .reduce(BigDecimal.ZERO, BigDecimal::add);
         out.printf("Clientes com pagamento do mês passado: %s%n", somaPagtosPorPeriodoEspecifico);
 
-        out.println("--- Exercício 09 ---");
+        out.println("\n--- Exercício 09 ---");
         Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), andre);
         Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), camila);
         Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), jonas);
@@ -216,14 +216,14 @@ public class Main {
         out.println(assinaturaCamila.getPeriodo().getBegin());
         out.println(assinaturaCamila.getPeriodo().getEnd().orElse(hoje));
 
-        out.println("--- Exercício 10 ---");
+        out.println("\n--- Exercício 10 ---");
         long periodoAssinaturaAndre = ChronoUnit.MONTHS.between(assinaturaAndre.getPeriodo().getBegin(), assinaturaAndre.getPeriodo().getEnd().orElse(hoje));
         out.printf("O período de assinatura da André é de %s meses %n", periodoAssinaturaAndre);
 
         long periodoAssinaturaMaria = ChronoUnit.MONTHS.between(assinaturaMaria.getPeriodo().getBegin(), assinaturaMaria.getPeriodo().getEnd().orElseGet(() -> hoje));
         out.printf("O período de assinatura da Camila é de %s meses %n", periodoAssinaturaMaria);
 
-        out.println("--- Exercício 11 ---");
+        out.println("\n--- Exercício 11 ---");
         assinaturas
             .stream()
             .map(Assinatura::getPeriodo)
@@ -244,8 +244,8 @@ public class Main {
         assinaturas.stream().collect(Collectors.toMap(
                 a -> a.getCliente().getNome(),
                 a -> ChronoUnit.MONTHS.between(
-                    a.getPeriodo().getBegin(),
-                    a.getPeriodo().getEnd().orElse(hoje)
+                        a.getPeriodo().getBegin(),
+                        a.getPeriodo().getEnd().orElse(hoje)
                 )
             )
         )
@@ -258,5 +258,22 @@ public class Main {
                 e.getValue()
             )
         ).forEach(out::println);
+
+        out.println("\n--- Exercício 12 ---");
+
+        assinaturas.stream().collect(Collectors.toMap(
+                                a -> a.getCliente().getNome(),
+                                a -> a.somarAssinaturas(hoje,a.getMensalidade())
+                        )
+                )
+                .entrySet()
+                .stream()
+                .map(
+                        e -> String.format(
+                                "Nome do Cliente: %s  | Total pago de assinaturas: R$ %s",
+                                e.getKey(),
+                                e.getValue()
+                        )
+                ).forEach(out::println);
     }
 }
