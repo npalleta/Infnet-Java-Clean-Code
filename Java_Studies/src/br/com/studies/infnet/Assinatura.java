@@ -41,13 +41,8 @@ public class Assinatura {
     }
 
     public BigDecimal somaAssinaturas(LocalDateTime ultimoDia, BigDecimal mensalidade) {
-        long inicioContratoAteHoje = ChronoUnit.MONTHS.between(periodo.getBegin(), ultimoDia);
         long periodoContratado = ChronoUnit.MONTHS.between(periodo.getBegin(), periodo.getEnd().orElse(ultimoDia));
-        BigDecimal temp = new BigDecimal(
-            (inicioContratoAteHoje >= periodoContratado) ? periodoContratado : inicioContratoAteHoje
-        );
-        BigDecimal mensalidadeTotal = mensalidade.multiply(temp);
-        return mensalidadeTotal;
+        return mensalidade.multiply(BigDecimal.valueOf(periodoContratado));
     }
 
     @Override
