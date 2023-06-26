@@ -40,12 +40,11 @@ public class Assinatura {
         this.cliente = cliente;
     }
 
-    public BigDecimal somarAssinaturas(LocalDateTime ultimoDia, BigDecimal mensalidade) {
-
-        long periodoContratado = ChronoUnit.MONTHS.between(periodo.getBegin(), periodo.getEnd().orElse(ultimoDia));
+    public BigDecimal somaAssinaturas(LocalDateTime ultimoDia, BigDecimal mensalidade) {
         long inicioContratoAteHoje = ChronoUnit.MONTHS.between(periodo.getBegin(), ultimoDia);
+        long periodoContratado = ChronoUnit.MONTHS.between(periodo.getBegin(), periodo.getEnd().orElse(ultimoDia));
         BigDecimal temp = new BigDecimal(
-                (inicioContratoAteHoje>=periodoContratado)?periodoContratado:inicioContratoAteHoje
+            (inicioContratoAteHoje >= periodoContratado) ? periodoContratado : inicioContratoAteHoje
         );
         BigDecimal mensalidadeTotal = mensalidade.multiply(temp);
         return mensalidadeTotal;

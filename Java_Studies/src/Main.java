@@ -253,27 +253,28 @@ public class Main {
         .stream()
         .map(
             e -> String.format(
-                "Nome do Cliente: %s | Tempo da Assinatura em Mês/Meses: %s",
+                "Nome do Cliente: %s | Tempo da assinatura em mês/meses: %s",
                 e.getKey(),
                 e.getValue()
             )
         ).forEach(out::println);
 
         out.println("\n--- Exercício 12 ---");
-
-        assinaturas.stream().collect(Collectors.toMap(
-                                a -> a.getCliente().getNome(),
-                                a -> a.somarAssinaturas(hoje,a.getMensalidade())
-                        )
+        assinaturas.stream().collect(
+                Collectors.toMap(
+                    a -> a.getCliente().getNome(),
+                    a -> a.somaAssinaturas(hoje, a.getMensalidade()
                 )
-                .entrySet()
-                .stream()
-                .map(
-                        e -> String.format(
-                                "Nome do Cliente: %s  | Total pago de assinaturas: R$ %s",
-                                e.getKey(),
-                                e.getValue()
-                        )
-                ).forEach(out::println);
+            )
+        )
+        .entrySet()
+        .stream()
+        .map(
+            e -> String.format(
+                "Nome do Cliente: %s | Total pago das assinaturas: R$ %s",
+                e.getKey(),
+                e.getValue()
+            )
+        ).forEach(out::println);
     }
 }
