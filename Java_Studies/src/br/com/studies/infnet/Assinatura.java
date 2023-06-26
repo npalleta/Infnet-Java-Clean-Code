@@ -40,9 +40,9 @@ public class Assinatura {
         this.cliente = cliente;
     }
 
-    public BigDecimal somaAssinaturas(LocalDateTime ultimoDia, BigDecimal mensalidade) {
+    public BigDecimal somaAssinaturas(LocalDateTime ultimoDia) {
         long periodoContratado = ChronoUnit.MONTHS.between(periodo.getBegin(), periodo.getEnd().orElse(ultimoDia));
-        return mensalidade.multiply(BigDecimal.valueOf(periodoContratado));
+        return getMensalidade().multiply(BigDecimal.valueOf(periodoContratado));
     }
 
     @Override

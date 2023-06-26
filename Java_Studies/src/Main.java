@@ -241,40 +241,45 @@ public class Main {
             });
         //
 
-        assinaturas.stream().collect(Collectors.toMap(
-                a -> a.getCliente().getNome(),
-                a -> ChronoUnit.MONTHS.between(
-                        a.getPeriodo().getBegin(),
-                        a.getPeriodo().getEnd().orElse(hoje)
-                )
-            )
-        )
-        .entrySet()
-        .stream()
-        .map(
-            e -> String.format(
-                "Nome do Cliente: %s | Tempo da assinatura em mês/meses: %s",
-                e.getKey(),
-                e.getValue()
-            )
-        ).forEach(out::println);
-
-        out.println("\n--- Exercício 12 ---");
-        assinaturas.stream().collect(
+        assinaturas
+            .stream()
+            .collect(
                 Collectors.toMap(
                     a -> a.getCliente().getNome(),
-                    a -> a.somaAssinaturas(hoje, a.getMensalidade()
+                    a -> ChronoUnit.MONTHS.between(
+                        a.getPeriodo().getBegin(),
+                        a.getPeriodo().getEnd().orElse(hoje)
+                    )
                 )
             )
-        )
-        .entrySet()
-        .stream()
-        .map(
-            e -> String.format(
-                "Nome do Cliente: %s | Total pago das assinaturas: R$ %s",
-                e.getKey(),
-                e.getValue()
+            .entrySet()
+            .stream()
+            .map(
+                e -> String.format(
+                    "Nome do Cliente: %s | Tempo da assinatura em mês/meses: %s",
+                    e.getKey(),
+                    e.getValue()
+                )
+            ).forEach(out::println);
+
+        out.println("\n--- Exercício 12 ---");
+        assinaturas
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    a -> a.getCliente().getNome(),
+                    a -> a.somaAssinaturas(hoje)
+                )
             )
-        ).forEach(out::println);
+            .entrySet()
+            .stream()
+            .map(
+                e -> String.format(
+                    "Nome do Cliente: %s | Total pago das assinaturas: R$ %s",
+                    e.getKey(),
+                    e.getValue()
+                )
+            ).forEach(out::println);
+        //
     }
 }
