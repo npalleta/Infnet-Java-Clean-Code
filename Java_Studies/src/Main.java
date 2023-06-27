@@ -261,6 +261,7 @@ public class Main {
                     e.getValue()
                 )
             ).forEach(out::println);
+        //
 
         out.println("\n--- Exercício 12 ---");
         assinaturas
