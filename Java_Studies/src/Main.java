@@ -228,9 +228,9 @@ public class Main {
             .stream()
             .map(Assinatura::getPeriodo)
             .mapToLong(
-                periodo -> ChronoUnit.MONTHS.between(
-                    periodo.getBegin(),
-                    periodo.getEnd().orElse(hoje)
+                p -> ChronoUnit.MONTHS.between(
+                    p.getBegin(),
+                    p.getEnd().orElse(hoje)
                 )
             )
             .forEach(contagemPeriodo -> {
