@@ -200,10 +200,10 @@ public class Main {
         out.printf("Clientes com pagamento do mês passado: %s%n", somaPagtosPorPeriodoEspecifico);
 
         out.println("\n--- Exercício 09 ---");
-        Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), andre);
-        Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), camila);
-        Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), jonas);
-        Assinatura assinaturaMaria = new Assinatura(new BigDecimal("99.98"), new Periodo(hoje, anoQueVem), maria);
+        Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), Plano.TRIMESTRAL, andre);
+        Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), Plano.SEMESTRAL , camila);
+        Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), Plano.ANUAL, jonas);
+        Assinatura assinaturaMaria = new Assinatura(new BigDecimal("99.98"), new Periodo(hoje, anoQueVem), Plano.SEMESTRAL, maria);
 
         List<Assinatura> assinaturas = List.of(assinaturaAndre, assinaturaCamila, assinaturaJonas, assinaturaMaria);
         assinaturas.forEach(out::println);
