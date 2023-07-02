@@ -1,23 +1,33 @@
 package br.com.pattern;
 
+import javax.swing.*;
+import java.util.Arrays;
+
 public class DriverFactory implements IAbstractFactoryDriver {
 
-    static AbstractDriverFactory driverFactory;
+    private AbstractDriverFactory driverFactory;
 
     @Override
     public AbstractDriverFactory buildDriver(String driverName) {
 
-        switch (driverName) {
-            case "chrome":
-                driverFactory = new ChromeDriver();
-            case "edge":
-                driverFactory = new EdgeDriver();
-                break;
-            case "firefox":
-                driverFactory = new FirefoxDriver();
-                break;
-            default:
-                System.out.println(String.format("Você não selecionou um driver existente: %s", driverName));
+        if (driverName.equals("chrome")) {
+            driverFactory = new ChromeDriver();
+        } else if (driverName.equals("edge")) {
+            driverFactory = new EdgeDriver();
+        } else if (driverName.equals("firefox")) {
+            driverFactory = new FirefoxDriver();
+        } else if (!Arrays.asList("chrome", "firefox", "edge").contains(driverName)) {
+            driverFactory = null;
+            JOptionPane.showMessageDialog(
+                new JFrame(),
+                String.format("Você tentou incluir um driver inexistente: %s", driverName),
+                "# ERROR! #",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        if (driverFactory == null) {
+            System.exit(0);
         }
 
         return driverFactory;
