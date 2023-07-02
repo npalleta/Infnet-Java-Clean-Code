@@ -67,6 +67,16 @@ Obs. Imagine que esse método rodará todo último dia do mes.
 # Terceira Entrega
 - Implementar de forma simples 2 Patterns criacionais, 1 Pattern estrutural e 1 Pattern comportamental.
 
+### Sobre o problema a ser resolvido com o Pattern:
+- Para o terceiro exercício, utilizamos o Abstract Factory Pattern.
+
+**Problema:** Definir um padrão para a escolha de diferentes Drivers de Navegadores, mas, que possuem as mesmas ações e comportamentos.
+A ideia é que possamos criar e controlar esses Drivers de Navegadores, todos da mesma forma.
+
+**O que desejamos:** Criar uma ou mais instâncias de Driver e controlar suas ações de forma independente, mas, que eu possa
+criar, iniciar e finalizar os serviços de Driver também.
+
+**A solução encontra-se no pacote: Infnet-Java-Clean-Code/Java_Studies/src/br/com/pattern**
 
 # ... . ... . ... . ... . ... . ... . ...
 ### Forma de Envio no Moodle:

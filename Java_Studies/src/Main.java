@@ -201,10 +201,10 @@ public class Main {
         out.printf("Clientes com pagamento do mês passado: %s%n", somaPagtosPorPeriodoEspecifico);
 
         out.println("\n--- Exercício 09 ---");
-        Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), andre);
-        Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), camila);
-        Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), jonas);
-        Assinatura assinaturaMaria = new Assinatura(new BigDecimal("99.98"), new Periodo(hoje, anoQueVem), maria);
+        Assinatura assinaturaAndre = new Assinatura(new BigDecimal("99.98"), new Periodo(ontem, hoje), Plano.TRIMESTRAL, andre, true);
+        Assinatura assinaturaCamila = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado, anoPassado), Plano.SEMESTRAL , camila, false);
+        Assinatura assinaturaJonas = new Assinatura(new BigDecimal("99.98"), new Periodo(anoRetrasado), Plano.ANUAL, jonas, false);
+        Assinatura assinaturaMaria = new Assinatura(new BigDecimal("99.98"), new Periodo(hoje, anoQueVem), Plano.SEMESTRAL, maria, false);
 
         List<Assinatura> assinaturas = List.of(assinaturaAndre, assinaturaCamila, assinaturaJonas, assinaturaMaria);
         assinaturas.forEach(out::println);
@@ -242,39 +242,52 @@ public class Main {
             });
         //
 
-        assinaturas.stream().collect(Collectors.toMap(
-                a -> a.getCliente().getNome(),
-                a -> ChronoUnit.MONTHS.between(
+        assinaturas
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    a -> a.getCliente().getNome(),
+                    a -> ChronoUnit.MONTHS.between(
                         a.getPeriodo().getBegin(),
                         a.getPeriodo().getEnd().orElse(hoje)
+                    )
                 )
             )
-        )
-        .entrySet()
-        .stream()
-        .map(
-            e -> String.format(
-                "Nome do Cliente: %s | Tempo da Assinatura em Mês/Meses: %s",
-                e.getKey(),
-                e.getValue()
-            )
-        ).forEach(out::println);
+            .entrySet()
+            .stream()
+            .map(
+                e -> String.format(
+                    "Nome do Cliente: %s | Tempo da assinatura em mês/meses: %s",
+                    e.getKey(),
+                    e.getValue()
+                )
+            ).forEach(out::println);
+        //
 
         out.println("\n--- Exercício 12 ---");
 
-        assinaturas.stream().collect(Collectors.toMap(
-                                a -> a.getCliente().getNome(),
-                                a -> a.somarAssinaturas(hoje,a.getMensalidade())
-                        )
+        out.println("\n--- Lista 02 ---");
+        assinaturas
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    a -> a.getCliente().getNome(),
+                    a -> a.somaAssinaturas(hoje)
                 )
-                .entrySet()
-                .stream()
-                .map(
-                        e -> String.format(
-                                "Nome do Cliente: %s  | Total pago de assinaturas: R$ %s",
-                                e.getKey(),
-                                e.getValue()
-                        )
-                ).forEach(out::println);
+            )
+            .entrySet()
+            .stream()
+            .map(
+                e -> String.format(
+                    "Nome do Cliente: %s | Total pago das assinaturas: R$ %s",
+                    e.getKey(),
+                    e.getValue()
+                )
+            ).forEach(out::println);
+        //
+        out.println();
+        assinaturas.forEach(assinatura -> {
+            out.print(assinatura.getCliente().bloqueiaCompra(assinatura, pagamentos));
+        });
     }
 }
