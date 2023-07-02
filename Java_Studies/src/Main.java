@@ -284,6 +284,7 @@ public class Main {
                 )
             ).forEach(out::println);
         //
+        
         out.println();
         assinaturas.forEach(assinatura -> {
             out.print(assinatura.getCliente().bloqueiaCompra(assinatura, pagamentos));
