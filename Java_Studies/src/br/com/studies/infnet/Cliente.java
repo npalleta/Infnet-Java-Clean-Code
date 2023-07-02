@@ -1,6 +1,8 @@
 package br.com.studies.infnet;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Cliente {
 
@@ -32,5 +34,25 @@ public class Cliente {
     @Override
     public int hashCode() {
         return Objects.hash(nome);
+    }
+
+    public String bloqueiaCompra(Assinatura assinatura, List<Pagamento> pagamentos) {
+        String s = "";
+        Optional<Pagamento> clientePagamentoAssinatura = pagamentos
+            .stream()
+            .takeWhile(pagamento -> pagamento.getCliente().getNome().equals(getNome()))
+            .filter(pagamento -> assinatura.isPagamentoAtrasado())
+            .findFirst();
+        
+        return clientePagamentoAssinatura.isPresent() ?
+            String.format(
+                "%s está com restrição de compra devido a falta de pagamento de sua assinatura!%n",
+                getNome()
+            ) :
+            String.format(
+                "Status para %s - Compra-Ok.%n",
+                getNome()
+            );
+        //
     }
 }
