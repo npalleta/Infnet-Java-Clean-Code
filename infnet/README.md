@@ -66,11 +66,14 @@ Obs. Imagine que esse método rodará todo último dia do mes.
 **Resolução:**
 - *Número de Issues:* 19 (Antes da Review);
 - *Número de Issues:* 3 (Após da Review);
-As issues que permanecem são:
-*De usar System.out.println* --> O Sonar entende que queremos usar o out.err;
+- 
+**As issues que permanecem são:**
+
+*De usar System.out.println*
+- O Sonar entende que queremos usar o out.err;
 
 *E 2 de baixo impacto que são apenas para indicar Deprecated Code.*
-totalAssinatura = totalAssinatura.add(montante).setScale(2, BigDecimal.ROUND_HALF_EVEN).
+- totalAssinatura = totalAssinatura.add(montante).setScale(2, BigDecimal.ROUND_HALF_EVEN).
 
 **As evidências encontram-se no pacote: Infnet-Java-Clean-Code/infnet/sonar**
 
