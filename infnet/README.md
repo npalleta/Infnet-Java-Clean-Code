@@ -70,7 +70,7 @@ Obs. Imagine que esse método rodará todo último dia do mes.
 **As issues que permanecem são:**
 
 *De usar System.out.println*
-- O Sonar entende que queremos usar o out.err;
+- O Sonar entende que queremos usar o out.err.
 
 *E 2 de baixo impacto que são apenas para indicar Deprecated Code*
 - totalAssinatura = totalAssinatura.add(montante).setScale(2, BigDecimal.ROUND_HALF_EVEN).
