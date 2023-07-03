@@ -63,6 +63,15 @@ Obs. Imagine que esse método rodará todo último dia do mes.
 - Identificar os Bad Smells e aplicar os princípios de Clean Code enquanto refatorar o código existente.
 - (Fazer junto com a Lista 2 da primeira entrega)
 
+**Resolução:**
+- *Número de Issues:* 19 (Antes da Review);
+- *Número de Issues:* 3 (Após da Review);
+As issues que permanecem são:
+*De usar System.out.println* --> O Sonar entende que queremos usar o out.err;
+*E 2 de baixo impacto que são apenas para indicar Deprecated Code.*
+totalAssinatura = totalAssinatura.add(montante).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+**As evidências encontram-se no pacote: Infnet-Java-Clean-Code/infnet/sonar**
 
 # Terceira Entrega
 - Implementar de forma simples 2 Patterns criacionais, 1 Pattern estrutural e 1 Pattern comportamental.

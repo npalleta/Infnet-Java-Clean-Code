@@ -1,4 +1,4 @@
-package br.com.studies.infnet;
+package com.studies;
 
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;

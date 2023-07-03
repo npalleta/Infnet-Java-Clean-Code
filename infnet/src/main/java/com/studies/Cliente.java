@@ -1,4 +1,4 @@
-package br.com.studies.infnet;
+package com.studies;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,8 +25,10 @@ public class Cliente {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Cliente cliente = (Cliente) o;
         return Objects.equals(nome, cliente.nome);
     }
@@ -43,12 +45,12 @@ public class Cliente {
             .filter(pagamento -> assinatura.isPagamentoAtrasado())
             .findFirst();
 
-        return clientePagamentoAssinatura.isPresent() ?
-            String.format(
+        return clientePagamentoAssinatura.isPresent()
+            ? String.format(
                 "%s está com restrição de compra devido a falta de pagamento de sua assinatura!%n",
                 getNome()
-            ) :
-            String.format(
+            )
+            : String.format(
                 "Status para %s - Compra-Ok.%n",
                 getNome()
             );

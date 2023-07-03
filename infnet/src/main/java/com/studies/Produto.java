@@ -1,4 +1,4 @@
-package br.com.studies.infnet;
+package com.studies;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;

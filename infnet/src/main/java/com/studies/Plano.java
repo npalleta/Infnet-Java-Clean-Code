@@ -1,4 +1,4 @@
-package br.com.studies.infnet;
+package com.studies;
 
 public enum Plano {
     ANUAL, SEMESTRAL, TRIMESTRAL

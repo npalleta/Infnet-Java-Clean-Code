@@ -1,4 +1,4 @@
-package br.com.studies.infnet;
+package com.studies;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,10 +26,12 @@ public class Assinatura {
     }
 
     public Double getTaxa() {
-        Double taxa = getPlano()
-            .equals(Plano.TRIMESTRAL) ? 0.05 : getPlano()
-            .equals(Plano.SEMESTRAL) ? 0.03 : 0;
-        return taxa;
+        Plano planoTaxa = getPlano();
+        return switch (planoTaxa) {
+            case TRIMESTRAL -> 0.05;
+            case SEMESTRAL -> 0.03;
+            default -> 0.0;
+        };
     }
 
     public BigDecimal getMensalidade() {
@@ -71,14 +73,13 @@ public class Assinatura {
         BigDecimal totalAssinatura = BigDecimal.valueOf(0);
         BigDecimal anterior = BigDecimal.valueOf(0);
 
-        for(int i = 1; i <= Math.min(inicioContratoAteHoje, periodoContratado); i++){
+        for (int i = 1; i <= Math.min(inicioContratoAteHoje, periodoContratado); i++) {
             BigDecimal montante = getMensalidade().multiply(BigDecimal.valueOf(Math.pow((1 + getTaxa()), i)));
             BigDecimal juros = montante.subtract(getMensalidade().subtract(anterior));
             anterior = anterior.add(juros);
 
             totalAssinatura = totalAssinatura.add(montante).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         }
-        // return getMensalidade().multiply(BigDecimal.valueOf(Math.min(inicioContratoAteHoje, periodoContratado)));
         return totalAssinatura;
     }
 
