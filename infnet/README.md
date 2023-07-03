@@ -66,7 +66,7 @@ Obs. Imagine que esse método rodará todo último dia do mes.
 **Resolução:**
 - *Número de Issues:* 19 (Antes da Review);
 - *Número de Issues:* 3 (Após da Review);
-- 
+
 **As issues que permanecem são:**
 
 *De usar System.out.println*
