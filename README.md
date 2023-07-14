@@ -1,3 +1,11 @@
+# Projeto final INFNET
+
+- Branchs com as entregas:
+
+[Lista 01](https://github.com/npalleta/Infnet-Java-Clean-Code/tree/npalleta/lista-01)
+[Lista 02](https://github.com/npalleta/Infnet-Java-Clean-Code/tree/npalleta/lista-02-revisada)
+[Lista 03](https://github.com/npalleta/Infnet-Java-Clean-Code/tree/npalleta/lista-03)
+
 # Primeira Entrega:
 ## LISTA 1:
 
